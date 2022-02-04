@@ -11,7 +11,7 @@
 
 ## Table of contents
 
-> * [Title / Repository Name](#title--repository-name)
+> * [Hardworkers system](#title--repository-name)
 >   * [About / Synopsis](#about--synopsis)
 >   * [Table of contents](#table-of-contents)
 >   * [Installation](#installation)
