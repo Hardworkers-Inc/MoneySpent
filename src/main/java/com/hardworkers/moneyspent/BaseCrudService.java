@@ -1,10 +1,10 @@
-package com.hardworkers.moneyspent.service;
+package com.hardworkers.moneyspent;
 
 import java.util.List;
 
 public interface BaseCrudService<T> {
 
-    List<T> getAll();
+    Iterable<T> getAll();
 
     T get(Long id);
 
@@ -12,5 +12,5 @@ public interface BaseCrudService<T> {
 
     T update(T t);
 
-    void delete(T t);
+    void delete(Long id);
 }
