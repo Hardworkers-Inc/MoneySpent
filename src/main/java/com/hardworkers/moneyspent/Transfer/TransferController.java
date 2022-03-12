@@ -17,7 +17,7 @@ public class TransferController {
 
     @GetMapping("/{id}")
     public Transfer getById(@PathVariable Long id) {
-        return transferService.get(id);
+        return transferService.getById(id);
     }
 
     @PostMapping

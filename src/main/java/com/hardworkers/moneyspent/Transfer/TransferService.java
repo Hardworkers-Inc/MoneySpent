@@ -2,6 +2,7 @@ package com.hardworkers.moneyspent.Transfer;
 
 import com.hardworkers.moneyspent.BaseCrudService;
 import com.hardworkers.moneyspent.exceptions.EntityNotFoundException;
+import com.hardworkers.moneyspent.exceptions.EntityValidationFailed;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class TransferService implements BaseCrudService<Transfer> {
     }
 
     @Override
-    public Transfer get(Long id) {
+    public Transfer getById(Long id) {
         return transferRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Transfer", id)
         );
@@ -30,11 +31,14 @@ public class TransferService implements BaseCrudService<Transfer> {
 
     @Override
     public Transfer update(Transfer transfer) {
+        if (transfer.getId() == null) {
+            throw new EntityValidationFailed("Id can't be null");
+        }
         return transferRepository.save(transfer);
     }
 
     @Override
     public void delete(Long id) {
-        transferRepository.delete(get(id));
+        transferRepository.deleteById(id);
     }
 }

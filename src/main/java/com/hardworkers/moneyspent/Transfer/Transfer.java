@@ -1,10 +1,7 @@
 package com.hardworkers.moneyspent.Transfer;
 
 import com.hardworkers.moneyspent.Tag.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -41,10 +38,11 @@ public class Transfer {
     @NotNull
     private BigInteger count;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     private Set<Tag> tags;
 
-    enum TransferType {
+    public enum TransferType {
         INCOME,
         SPENT
     }
