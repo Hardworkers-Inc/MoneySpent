@@ -3,17 +3,17 @@ package com.hardworkers.moneyspent.transfer;
 import com.hardworkers.moneyspent.Transfer.Transfer;
 import com.hardworkers.moneyspent.Transfer.TransferRepository;
 import com.hardworkers.moneyspent.Transfer.TransferService;
+import com.hardworkers.moneyspent.Transfer.TransferValidator;
 import com.hardworkers.moneyspent.exceptions.EntityNotFoundException;
-import com.hardworkers.moneyspent.exceptions.EntityValidationFailed;
+import com.hardworkers.moneyspent.exceptions.EntityValidationFailedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import org.junit.jupiter.api.function.Executable;
-
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
@@ -30,13 +30,16 @@ public class TransferServiceTest {
     private static final String TRANSFER_TITLE = "Title";
     private static final String TRANSFER_DESCRIPTION = "Description";
     private static final LocalDateTime TRANSFER_DATETIME = LocalDateTime.now();
-    private static final BigInteger TRANSFER_COUNT = BigInteger.TEN;
+    private static final BigDecimal TRANSFER_COUNT = BigDecimal.TEN;
 
     @InjectMocks
     private TransferService transferService;
 
     @Mock
     private TransferRepository transferRepositoryMock;
+
+    @Mock
+    private TransferValidator transferValidator;
 
     @BeforeEach
     public void init() {
@@ -128,6 +131,7 @@ public class TransferServiceTest {
                 .tags(Collections.emptySet())
                 .build();
         when(transferRepositoryMock.save(transfer)).thenReturn(transfer);
+        when(transferValidator.validate(transfer)).thenReturn("");
 
         // WHEN
         Transfer transferFromService = transferService.create(transfer);
@@ -179,7 +183,7 @@ public class TransferServiceTest {
 
     /**
      * Test case to cover {@link TransferService#create(Transfer)} with invalid id.
-     * Expected to get {@link EntityValidationFailed}.
+     * Expected to get {@link EntityValidationFailedException}.
      */
     @Test
     public void testUpdateWithoutId() {
@@ -197,7 +201,7 @@ public class TransferServiceTest {
         final Executable executable = () -> transferService.update(transfer);
 
         // THEN
-        assertThrows(EntityValidationFailed.class, executable, "EntityValidationFailed should be thrown.");
+        assertThrows(EntityValidationFailedException.class, executable, "EntityValidationFailed should be thrown.");
         verifyNoInteractions(transferRepositoryMock);
     }
 

@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -36,7 +36,7 @@ public class Transfer {
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @NotNull
-    private BigInteger count;
+    private BigDecimal count;
 
     @EqualsAndHashCode.Exclude
     @ManyToMany

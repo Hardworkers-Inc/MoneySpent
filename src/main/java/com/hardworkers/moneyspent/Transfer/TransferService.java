@@ -2,7 +2,7 @@ package com.hardworkers.moneyspent.Transfer;
 
 import com.hardworkers.moneyspent.BaseCrudService;
 import com.hardworkers.moneyspent.exceptions.EntityNotFoundException;
-import com.hardworkers.moneyspent.exceptions.EntityValidationFailed;
+import com.hardworkers.moneyspent.exceptions.EntityValidationFailedException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class TransferService implements BaseCrudService<Transfer> {
 
     private final TransferRepository transferRepository;
+    private final TransferValidator transferValidator;
 
     @Override
     public Iterable<Transfer> getAll() {
@@ -26,13 +27,17 @@ public class TransferService implements BaseCrudService<Transfer> {
 
     @Override
     public Transfer create(Transfer transfer) {
+        String error = transferValidator.validate(transfer);
+        if (error.length() > 0) {
+            throw new EntityValidationFailedException(error);
+        }
         return transferRepository.save(transfer);
     }
 
     @Override
     public Transfer update(Transfer transfer) {
         if (transfer.getId() == null) {
-            throw new EntityValidationFailed("Id can't be null");
+            throw new EntityValidationFailedException("Id can't be null");
         }
         return transferRepository.save(transfer);
     }
