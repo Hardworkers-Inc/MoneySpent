@@ -1,6 +1,7 @@
 package com.hardworkers.moneyspent.Transfer;
 
 import com.hardworkers.moneyspent.Tag.Tag;
+import com.hardworkers.moneyspent.TransferType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,9 +42,4 @@ public class Transfer {
     @EqualsAndHashCode.Exclude
     @ManyToMany
     private Set<Tag> tags;
-
-    public enum TransferType {
-        INCOME,
-        SPENT
-    }
 }
