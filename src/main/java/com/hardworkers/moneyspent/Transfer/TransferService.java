@@ -39,11 +39,13 @@ public class TransferService implements BaseCrudService<Transfer> {
         if (transfer.getId() == null) {
             throw new EntityValidationFailedException("Id can't be null");
         }
+        transferValidator.validateExist(transfer.getId());
         return transferRepository.save(transfer);
     }
 
     @Override
     public void delete(Long id) {
+        transferValidator.validateExist(id);
         transferRepository.deleteById(id);
     }
 }

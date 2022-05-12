@@ -1,6 +1,7 @@
 package com.hardworkers.moneyspent.Tag;
 
 import com.hardworkers.moneyspent.BaseCrudService;
+import com.hardworkers.moneyspent.exceptions.EntityDuplicatesException;
 import com.hardworkers.moneyspent.exceptions.EntityNotFoundException;
 import com.hardworkers.moneyspent.exceptions.EntityValidationFailedException;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Objects;
 public class TagService implements BaseCrudService<Tag> {
 
     private final TagRepository tagRepository;
+    private final TagValidator tagValidator;
 
     @Override
     public Iterable<Tag> getAll() {
@@ -26,8 +28,17 @@ public class TagService implements BaseCrudService<Tag> {
         );
     }
 
+    public Tag getByName(String name) {
+        return tagRepository.findByName(name).orElseThrow(
+                () -> new EntityNotFoundException("Tag", name)
+        );
+    }
+
     @Override
     public Tag create(Tag tag) {
+        if (tagRepository.findByName(tag.getName()).isPresent()) {
+            throw new EntityDuplicatesException("Tag", tag.getName());
+        }
         return tagRepository.save(tag);
     }
 
@@ -36,11 +47,14 @@ public class TagService implements BaseCrudService<Tag> {
         if (Objects.isNull(tag.getId())) {
             throw new EntityValidationFailedException("Id can't be null");
         }
+        tagValidator.validateExist(tag.getId());
         return tagRepository.save(tag);
     }
 
     @Override
     public void delete(Long id) {
+        tagValidator.validateExist(id);
         tagRepository.deleteById(id);
     }
+
 }
