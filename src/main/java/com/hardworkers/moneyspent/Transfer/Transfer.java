@@ -1,6 +1,7 @@
 package com.hardworkers.moneyspent.Transfer;
 
 import com.hardworkers.moneyspent.Tag.Tag;
+import com.hardworkers.moneyspent.TransferType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -40,10 +42,6 @@ public class Transfer {
 
     @EqualsAndHashCode.Exclude
     @ManyToMany
-    private Set<Tag> tags;
-
-    public enum TransferType {
-        INCOME,
-        SPENT
-    }
+    @Builder.Default
+    private Set<Tag> tags = new HashSet<>();
 }

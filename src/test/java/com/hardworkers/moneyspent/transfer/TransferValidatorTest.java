@@ -2,6 +2,7 @@ package com.hardworkers.moneyspent.transfer;
 
 import com.hardworkers.moneyspent.Transfer.Transfer;
 import com.hardworkers.moneyspent.Transfer.TransferValidator;
+import com.hardworkers.moneyspent.TransferType;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class TransferValidatorTest {
                 .description(TRANSFER_DESCRIPTION)
                 .dateTime(TRANSFER_DATETIME)
                 .count(TRANSFER_COUNT)
-                .transferType(Transfer.TransferType.INCOME)
+                .transferType(TransferType.INCOME)
                 .tags(Collections.emptySet())
                 .build();
 
@@ -73,7 +74,7 @@ public class TransferValidatorTest {
                 .description(TRANSFER_DESCRIPTION)
                 .dateTime(TRANSFER_DATETIME)
                 .count(TRANSFER_COUNT)
-                .transferType(Transfer.TransferType.INCOME)
+                .transferType(TransferType.INCOME)
                 .tags(Collections.emptySet())
                 .build();
 
@@ -93,7 +94,7 @@ public class TransferValidatorTest {
                 .description(TRANSFER_DESCRIPTION)
                 .dateTime(TRANSFER_DATETIME)
                 .count(TRANSFER_COUNT)
-                .transferType(Transfer.TransferType.INCOME)
+                .transferType(TransferType.INCOME)
                 .tags(Collections.emptySet())
                 .build();
 
@@ -113,7 +114,7 @@ public class TransferValidatorTest {
                 .description(RandomStringUtils.random(251))
                 .dateTime(TRANSFER_DATETIME)
                 .count(TRANSFER_COUNT)
-                .transferType(Transfer.TransferType.INCOME)
+                .transferType(TransferType.INCOME)
                 .tags(Collections.emptySet())
                 .build();
 
@@ -132,7 +133,7 @@ public class TransferValidatorTest {
                 .title(TRANSFER_TITLE)
                 .description(TRANSFER_DESCRIPTION)
                 .count(TRANSFER_COUNT)
-                .transferType(Transfer.TransferType.INCOME)
+                .transferType(TransferType.INCOME)
                 .tags(Collections.emptySet())
                 .build();
 

@@ -1,5 +1,7 @@
 package com.hardworkers.moneyspent.Transfer;
 
+import com.hardworkers.moneyspent.exceptions.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -10,7 +12,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class TransferValidator {
+@AllArgsConstructor
+public record TransferValidator(TransferRepository transferRepository) {
 
     private static final String PREFIX = "Transfer has validation errors: ";
 
@@ -44,5 +47,11 @@ public class TransferValidator {
             return errors.stream().collect(Collectors.joining(", ", PREFIX, "!"));
         }
         return "";
+    }
+
+    public void validateExist(Long id) {
+        if (!transferRepository.existsById(id)) {
+            throw new EntityNotFoundException("Transfer", id);
+        }
     }
 }
